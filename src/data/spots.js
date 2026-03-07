@@ -10,7 +10,7 @@ export const CATEGORIES = [
             { name: 'Paragon', note: 'Legendary Kozhikodan chicken biryani', tags: ['chicken', 'iconic'] },
             { name: '1980s', note: 'Famous for rich beef biryani', tags: ['beef'] },
             { name: 'Salkara', note: 'Classic Malabar-style biryani', tags: ['malabar'] },
-            { name: 'Kuttichira Beef Biryani', note: 'Neighbourhood gem, beef done right', tags: ['beef', 'local'] },
+            { name: 'Kuttichira Biriyani Centre', note: 'Neighbourhood gem, beef done right', tags: ['beef', 'local'] },
         ],
     },
     {
