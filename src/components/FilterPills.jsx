@@ -1,5 +1,6 @@
 import Icon from './Icon';
 import { CATEGORIES } from '../data/spots';
+import { trackEvent } from '../utils/analytics';
 import { MapPin } from 'lucide-react';
 
 const ALL_OPTION = { id: 'all', label: 'All Spots', icon: 'LayoutGrid' };
@@ -16,7 +17,13 @@ export default function FilterPills({ active, onSelect }) {
                         role="tab"
                         aria-selected={active === opt.id}
                         className={`pill${active === opt.id ? ' active' : ''}`}
-                        onClick={() => onSelect(opt.id)}
+                        onClick={() => {
+                            onSelect(opt.id);
+                            trackEvent('category_click', {
+                                category_id: opt.id,
+                                category_name: opt.label
+                            });
+                        }}
                     >
                         <span className="pill-icon">
                             <Icon name={opt.icon} size={14} strokeWidth={2} />

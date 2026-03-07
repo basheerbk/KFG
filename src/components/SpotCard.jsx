@@ -1,8 +1,14 @@
+import { trackEvent } from '../utils/analytics';
+
 export default function SpotCard({ spot, accent }) {
     return (
         <article
             className="card"
             style={{ '--card-accent': accent }}
+            onClick={() => trackEvent('spot_click', {
+                spot_name: spot.name,
+                spot_tags: spot.tags?.join(', ')
+            })}
         >
             <h3 className="card-name">{spot.name}</h3>
             {spot.note && <p className="card-note">{spot.note}</p>}

@@ -1,5 +1,6 @@
-import { useState, useMemo } from 'react';
+import { useState, useMemo, useEffect } from 'react';
 import { CATEGORIES } from './data/spots';
+import { trackEvent } from './utils/analytics';
 import Hero from './components/Hero';
 import SearchBar from './components/SearchBar';
 import FilterPills from './components/FilterPills';
@@ -14,6 +15,23 @@ export default function App() {
     if (activeCat === 'all') return CATEGORIES;
     return CATEGORIES.filter((c) => c.id === activeCat);
   }, [activeCat]);
+
+  // Track category changes
+  useEffect(() => {
+    trackEvent('category_view', {
+      category_id: activeCat,
+      category_label: activeCat === 'all' ? 'All' : CATEGORIES.find(c => c.id === activeCat)?.label
+    });
+  }, [activeCat]);
+
+  // Track searches (with small delay to avoid spamming)
+  useEffect(() => {
+    if (!query.trim()) return;
+    const timer = setTimeout(() => {
+      trackEvent('search', { search_term: query.trim() });
+    }, 1000);
+    return () => clearTimeout(timer);
+  }, [query]);
 
   // Check if any result exists (for no-results state)
   const hasResults = useMemo(() => {
